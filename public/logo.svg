@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur1"/>
+      <feGaussianBlur stdDeviation="4" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <g filter="url(#neonGlow)">
+    <!-- Graduation Cap Top -->
+    <path d="M50 20 L15 35 L50 50 L85 35 Z" fill="none" stroke="#4dabf7" stroke-width="3" stroke-linejoin="round"/>
+    
+    <!-- Graduation Cap Base -->
+    <path d="M25 42 L25 62 C25 75 75 75 75 62 L75 42" fill="none" stroke="#4dabf7" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Code Brackets {} -->
+    <path d="M42 35 C38 35 38 40 38 40 L38 42 C38 45 35 45 35 45 C35 45 38 45 38 48 L38 50 C38 50 38 55 42 55" fill="none" stroke="#4dabf7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M58 35 C62 35 62 40 62 40 L62 42 C62 45 65 45 65 45 C65 45 62 45 62 48 L62 50 C62 50 62 55 58 55" fill="none" stroke="#4dabf7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Tassel -->
+  <path d="M85 35 L85 60" fill="none" stroke="#adb5bd" stroke-width="2"/>
+  <circle cx="85" cy="62" r="3" fill="#adb5bd"/>
+  <path d="M82 65 Q85 80 88 65 Z" fill="#adb5bd"/>
+</svg>

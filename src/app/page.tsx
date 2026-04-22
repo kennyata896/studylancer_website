@@ -191,6 +191,27 @@ function StarIcon({ className }: { className?: string }) {
   );
 }
 
+/* ── Transaction Popup ─────────────────────────────────────── */
+function TransactionPopup({ text, delay, position }: { text: string; delay: number; position: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        duration: 0.5,
+        delay,
+        repeat: Infinity,
+        repeatType: "reverse",
+        repeatDelay: 3,
+      }}
+      className={`absolute ${position} z-20 glass-card px-4 py-2.5 rounded-2xl border border-teal/20 shadow-[0_0_20px_rgba(20,240,197,0.15)] flex items-center gap-3 backdrop-blur-md`}
+    >
+      <div className="w-2.5 h-2.5 rounded-full bg-teal animate-pulse" />
+      <span className="text-xs sm:text-sm font-bold text-white whitespace-nowrap">{text}</span>
+    </motion.div>
+  );
+}
+
 /* ── Showcase Card ─────────────────────────────────────────── */
 function ShowcaseCard({
   emoji,
@@ -391,9 +412,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal to-teal-dim flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">S</span>
-            </div>
+            <Image src="/logo.svg" alt="Studylancer Logo" width={32} height={32} className="drop-shadow-[0_0_8px_rgba(20,240,197,0.4)]" />
             <span className="text-white font-semibold text-lg tracking-tight">
               Studylancer
             </span>
@@ -416,85 +435,104 @@ export default function Home() {
           ═══════════════════════════════════════════════════ */}
       <section
         id="hero"
-        className="relative min-h-screen flex items-center justify-center bg-grid hero-glow overflow-hidden pt-16"
+        className="relative min-h-screen flex items-center justify-center bg-grid hero-glow overflow-hidden pt-24 sm:pt-32 pb-20"
       >
         {/* Animated orb decoration */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-teal/[0.03] blur-3xl pointer-events-none animate-pulse-ring" />
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center py-20 sm:py-32">
-          {/* Badge */}
-          <FadeIn>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal/20 bg-teal/5 mb-8">
-              <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-              <span className="text-teal text-xs sm:text-sm font-medium tracking-wide">
-                Escrow-Protected Peer Learning
-              </span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            
+            {/* Left Col: Text Content */}
+            <div className="text-center lg:text-left flex flex-col items-center lg:items-start z-10">
+              {/* Badge */}
+              <FadeIn>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal/20 bg-teal/5 mb-8">
+                  <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
+                  <span className="text-teal text-xs sm:text-sm font-medium tracking-wide">
+                    Escrow-Protected Peer Learning
+                  </span>
+                </div>
+              </FadeIn>
+
+              {/* Headline */}
+              <FadeIn delay={0.1}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-6">
+                  Learn Anything.
+                  <br />
+                  Teach Anyone.
+                  <br />
+                  <span className="bg-gradient-to-r from-teal to-teal-dim bg-clip-text text-transparent">
+                    Earn on Your Terms.
+                  </span>
+                </h1>
+              </FadeIn>
+
+              {/* Subheadline */}
+              <FadeIn delay={0.2}>
+                <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed mb-10">
+                  Join a community where every student is a potential tutor. Post bounties for what you want to learn, or accept requests to teach and earn money securely.
+                </p>
+              </FadeIn>
+
+              {/* CTA Buttons */}
+              <FadeIn delay={0.3}>
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full">
+                  <Button
+                    size="lg"
+                    id="cta-download"
+                    className="bg-teal text-slate-950 hover:bg-teal-dim font-semibold text-sm sm:text-base h-12 px-6 sm:px-8 rounded-xl w-full sm:w-auto cursor-pointer shadow-[0_0_30px_rgba(20,240,197,0.2)] hover:shadow-[0_0_40px_rgba(20,240,197,0.35)] transition-all duration-300"
+                    onClick={openPlayStore}
+                  >
+                    <PlayIcon />
+                    Download on Google Play
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    id="cta-learn-more"
+                    className="border-white/10 text-white hover:bg-white/5 hover:text-white font-medium text-sm sm:text-base h-12 px-6 sm:px-8 rounded-xl w-full sm:w-auto cursor-pointer transition-all duration-300"
+                    onClick={handleLearnMore}
+                  >
+                    Learn More
+                    <ChevronDownIcon />
+                  </Button>
+                </div>
+              </FadeIn>
+
+              {/* Trust badges */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-12 sm:mt-16">
+                <TrustBadge
+                  icon={<ShieldCheckIcon />}
+                  label="Escrow Protected"
+                  delay={0.5}
+                />
+                <TrustBadge
+                  icon={<UsersIcon />}
+                  label="Verified Peers"
+                  delay={0.6}
+                />
+              </div>
             </div>
-          </FadeIn>
 
-          {/* Headline */}
-          <FadeIn delay={0.1}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-6">
-              Demand Value.
-              <br />
-              Define Your Terms.
-              <br />
-              <span className="bg-gradient-to-r from-teal to-teal-dim bg-clip-text text-transparent">
-                Learn on Your Schedule.
-              </span>
-            </h1>
-          </FadeIn>
-
-          {/* Subheadline */}
-          <FadeIn delay={0.2}>
-            <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
-              Post a learning bounty, connect with verified peer tutors, and
-              keep your money 100% safe in escrow until success is confirmed.
-            </p>
-          </FadeIn>
-
-          {/* CTA Buttons */}
-          <FadeIn delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <Button
-                size="lg"
-                id="cta-download"
-                className="bg-teal text-slate-950 hover:bg-teal-dim font-semibold text-sm sm:text-base h-12 px-6 sm:px-8 rounded-xl w-full sm:w-auto cursor-pointer shadow-[0_0_30px_rgba(20,240,197,0.2)] hover:shadow-[0_0_40px_rgba(20,240,197,0.35)] transition-all duration-300"
-                onClick={openPlayStore}
-              >
-                <PlayIcon />
-                Download on Google Play
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                id="cta-learn-more"
-                className="border-white/10 text-white hover:bg-white/5 hover:text-white font-medium text-sm sm:text-base h-12 px-6 sm:px-8 rounded-xl w-full sm:w-auto cursor-pointer transition-all duration-300"
-                onClick={handleLearnMore}
-              >
-                Learn More
-                <ChevronDownIcon />
-              </Button>
-            </div>
-          </FadeIn>
-
-          {/* Trust badges */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-12 sm:mt-16">
-            <TrustBadge
-              icon={<ShieldCheckIcon />}
-              label="Escrow Protected"
-              delay={0.5}
-            />
-            <TrustBadge
-              icon={<UsersIcon />}
-              label="Verified Peers"
-              delay={0.6}
-            />
-            <TrustBadge
-              icon={<LockIcon />}
-              label="End-to-End Secure"
-              delay={0.7}
-            />
+            {/* Right Col: Interactive Demo iframe & Ads */}
+            <FadeIn delay={0.4} className="relative flex items-center justify-center min-h-[500px] sm:min-h-[700px] w-full max-w-[600px] mx-auto lg:mr-0 z-0 mt-8 lg:mt-0">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <iframe 
+                  src="/demo.html" 
+                  className="w-full h-full max-h-[850px] border-none bg-transparent pointer-events-auto" 
+                  style={{ backgroundColor: 'transparent' }}
+                  title="Studylancer Interactive Demo"
+                />
+              </div>
+              
+              {/* Transaction Popups (Ads-like elements) */}
+              <TransactionPopup text="Rahul earned ₹350" delay={2} position="top-[15%] left-[0%] sm:left-[5%]" />
+              <TransactionPopup text="Session Locked 🔒" delay={5} position="bottom-[25%] right-[-5%] sm:right-[5%]" />
+              <TransactionPopup text="New Bounty: OOP" delay={8} position="top-[40%] right-[0%] sm:right-[5%]" />
+              <TransactionPopup text="Payment Released 💸" delay={11} position="bottom-[10%] left-[5%] sm:left-[10%]" />
+            </FadeIn>
+            
           </div>
         </div>
       </section>
@@ -741,9 +779,7 @@ export default function Home() {
             {/* Logo + tagline */}
             <div className="flex flex-col items-center sm:items-start gap-2">
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-md bg-gradient-to-br from-teal to-teal-dim flex items-center justify-center">
-                  <span className="text-slate-950 font-bold text-xs">S</span>
-                </div>
+                <Image src="/logo.svg" alt="Studylancer Logo" width={28} height={28} className="drop-shadow-[0_0_8px_rgba(20,240,197,0.4)]" />
                 <span className="text-white font-semibold tracking-tight">
                   Studylancer
                 </span>

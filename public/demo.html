@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studylancer Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#121212;--card:#1E1E2E;--surface:#2A2A3C;--pri:#A855F7;--acc:#34D399;--txt:#E2E8F0;--mut:#64748B;--sec:#94A3B8;--bor:#2D2D3F;--warn:#FBBF24;--dng:#F87171;--info:#60A5FA}
+body{font-family:'Inter',sans-serif;background:transparent;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--txt)}
+
+/* Initial Page Load Flash Removed for iframe transparency */
+
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.18;animation:fl 6s ease-in-out infinite}
+.o1{width:350px;height:350px;background:var(--pri);top:-80px;left:-80px}
+.o2{width:300px;height:300px;background:var(--acc);bottom:-60px;right:-60px;animation-delay:2s}
+@keyframes fl{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.1)}}
+.particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+.p{position:absolute;width:2px;height:2px;border-radius:50%;opacity:0;animation:sp 3s linear infinite}
+@keyframes sp{0%{opacity:0;transform:translateY(0)}20%{opacity:.5}100%{opacity:0;transform:translateY(-150px)}}
+
+/* Wrap Entry Animation */
+.wrap{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  animation: wrapEnter 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes wrapEnter {
+  0% { transform: perspective(1000px) translateY(120px) rotateX(20deg) scale(0.7); opacity: 0; filter: blur(10px); }
+  100% { transform: perspective(1000px) translateY(0) rotateX(0) scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* Background Pulse Rings */
+.pulse-bg {
+  position: absolute;
+  top: 55%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 270px; height: 560px;
+  border-radius: 40px;
+  border: 2px solid var(--pri);
+  opacity: 0;
+  animation: pulseBg 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  z-index: -1;
+}
+.pulse-bg.d2 {
+  animation-delay: 1.5s;
+  border-color: var(--acc);
+}
+@keyframes pulseBg {
+  0% { width: 270px; height: 560px; opacity: 0.8; border-width: 4px; }
+  100% { width: 550px; height: 850px; opacity: 0; border-width: 1px; }
+}
+
+/* Floating Elements */
+.floater { position: absolute; z-index: 0; opacity: 0; pointer-events: none; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
+.f1 { font-size: 40px; left: -100px; top: 15%; animation: floatItem 6s ease-in-out infinite 0s; }
+.f2 { font-size: 50px; right: -120px; top: 25%; animation: floatItem 7s ease-in-out infinite 1s; }
+.f3 { font-size: 35px; left: -70px; bottom: 35%; animation: floatItem 5s ease-in-out infinite 2s; }
+.f4 { font-size: 45px; right: -80px; bottom: 25%; animation: floatItem 6s ease-in-out infinite 3s; }
+.f5 { font-size: 30px; left: -110px; top: 55%; animation: floatItem 8s ease-in-out infinite 4s; }
+@keyframes floatItem {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.1; }
+  50% { transform: translateY(-40px) scale(1.15) rotate(20deg); opacity: 0.9; }
+}
+
+/* Phone */
+.phone{width:270px;height:560px;background:var(--bg);border-radius:34px;border:3px solid #333;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(168,85,247,.2),0 30px 60px rgba(0,0,0,.6);transition:transform .6s cubic-bezier(.4,0,.2,1); z-index: 10;}
+.phone::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#000;border-radius:0 0 14px 14px;z-index:60}
+.phone::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:90px;height:4px;background:#444;border-radius:4px;z-index:60}
+.phone.zoom{transform:scale(1.25)}
+
+/* Phone Shine Effect */
+.phone-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.08) 25%, transparent 30%);
+  z-index: 55;
+  pointer-events: none;
+  background-size: 200% 200%;
+  animation: shineSwipe 4s infinite;
+}
+@keyframes shineSwipe {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* Screens */
+.sw{position:absolute;inset:0;overflow:hidden}
+.sc{position:absolute;inset:0;padding:30px 14px 12px;display:flex;flex-direction:column;opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);pointer-events:none;overflow-y:auto;transform:scale(.92)}
+.sc.on{opacity:1;transform:scale(1);pointer-events:auto}
+
+/* Caption */
+.cap{text-align:center;height:60px;transition:all .3s; z-index: 10; position: relative;}
+.cap h2{font-size:22px;font-weight:900;background:linear-gradient(135deg,var(--pri),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;transition:all .3s; text-shadow: 0 4px 20px rgba(168,85,247,0.3);}
+.cap p{font-size:12px;color:var(--sec);margin-top:4px;transition:all .3s}
+
+/* Highlight callout */
+.callout{position:absolute;z-index:70;padding:6px 14px;border-radius:10px;font-size:11px;font-weight:800;color:#fff;white-space:nowrap;opacity:0;transform:translateY(8px) scale(.9);transition:all .35s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.callout.on{opacity:1;transform:translateY(0) scale(1)}
+.callout.pri{background:var(--pri);box-shadow:0 0 20px rgba(168,85,247,.5)}
+.callout.acc{background:var(--acc);box-shadow:0 0 20px rgba(52,211,153,.5)}
+.callout.wrn{background:var(--warn);color:#1a1a1a;box-shadow:0 0 20px rgba(251,191,36,.5)}
+.callout::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent}
+.callout.pri::after{border-top:6px solid var(--pri)}
+.callout.acc::after{border-top:6px solid var(--acc)}
+.callout.wrn::after{border-top:6px solid var(--warn)}
+
+/* Pulse ring on tap targets */
+.ring{position:absolute;z-index:65;width:50px;height:50px;border-radius:50%;border:2px solid var(--pri);opacity:0;pointer-events:none;animation:none}
+.ring.go{animation:ping .6s ease-out forwards}
+@keyframes ping{0%{transform:scale(.5);opacity:.8}100%{transform:scale(2);opacity:0}}
+
+/* Progress */
+.pbar{display:flex;gap:4px;width:270px; margin-top: 10px; z-index: 10; position: relative;}
+.pd{flex:1;height:4px;background:var(--surface);border-radius:4px;overflow:hidden}
+.pd .f{height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--acc));border-radius:4px; box-shadow: 0 0 10px var(--pri);}
+.pd.done .f{width:100%}
+
+/* ===== S1: Login ===== */
+.s1{align-items:center;justify-content:center;gap:14px}
+.logo{width:75px;height:75px;border-radius:50%;background:linear-gradient(135deg,var(--pri),#7C3AED);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;box-shadow:0 0 40px rgba(168,85,247,.6); animation: logoPulse 2s infinite;}
+@keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.s1 h3{font-size:20px;font-weight:800}
+.s1 .sub{font-size:12px;color:var(--sec);text-align:center;line-height:1.5}
+.gbtn{display:flex;align-items:center;gap:8px;background:#fff;color:#1f1f1f;font-weight:700;font-size:13px;padding:12px 24px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2); transform: translateY(10px);}
+.gbtn .g{color:#EA4335;font-weight:800;font-size:16px}
+
+/* ===== S2: Marketplace ===== */
+.s2 .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.s2 .hd h3{font-size:15px;font-weight:800}
+.s2 .live{font-size:10px;background:var(--pri);color:#fff;padding:4px 10px;border-radius:8px;font-weight:700; box-shadow: 0 0 10px var(--pri);}
+.bc{background:var(--card);border-radius:14px;padding:12px;margin-bottom:8px;border:1px solid var(--bor); transition: transform 0.2s;}
+.bc:hover { transform: translateY(-2px); border-color: var(--pri); }
+.bc-t{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.bc-a{width:28px;height:28px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sec);flex-shrink:0}
+.bc-tp{flex:1;font-size:12px;font-weight:700;line-height:1.3}
+.bc-pr{font-size:14px;font-weight:800;color:var(--acc)}
+.bc-pl{display:flex;gap:4px}
+.bc-pi{font-size:9px;background:var(--surface);color:var(--sec);padding:3px 8px;border-radius:6px;font-weight:600}
+.fab{position:absolute;bottom:50px;right:14px;width:44px;height:44px;background:var(--pri);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;box-shadow:0 0 20px rgba(168,85,247,.5);z-index:10; animation: fabBounce 2s infinite;}
+@keyframes fabBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.tbar{display:flex;justify-content:space-around;padding:6px 0;border-top:1px solid var(--bor);margin-top:auto}
+.tb{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:8px;color:var(--mut);font-weight:600}
+.tb.a{color:var(--pri)}
+.tb .ti{font-size:14px}
+
+/* ===== S3: Create ===== */
+.s3 h3{font-size:16px;font-weight:800;margin-bottom:2px}
+.s3 .sub{font-size:10px;color:var(--sec);margin-bottom:10px}
+.fl{font-size:8px;font-weight:700;color:var(--mut);letter-spacing:1px;margin:6px 0 3px}
+.fi{background:var(--card);border:1px solid var(--bor);border-radius:10px;padding:8px 12px;font-size:11px;color:var(--txt);width:100%}
+.fi.glow{border-color:var(--pri);box-shadow:0 0 0 2px rgba(168,85,247,.15)}
+.cur{display:inline-block;width:1px;height:12px;background:var(--pri);animation:bk .6s step-end infinite;vertical-align:middle;margin-left:1px}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:0}}
+.er{display:flex;gap:4px;margin:3px 0 6px}
+.ep{flex:1;text-align:center;font-size:9px;font-weight:600;padding:6px;border-radius:8px;background:var(--card);border:1px solid var(--bor);color:var(--mut)}
+.ep.sel{background:rgba(168,85,247,.12);border-color:var(--pri);color:var(--pri);font-weight:700}
+.pbtn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--pri);color:#fff;font-size:13px;font-weight:800;padding:12px;border-radius:12px;margin-top:8px;box-shadow:0 0 16px rgba(168,85,247,.3)}
+
+/* ===== S3b: Accept & Earn ===== */
+.s3b { align-items: center; justify-content: center; gap: 8px; text-align: center; padding-top: 35px !important;}
+.earn-badge { background: rgba(52,211,153,.15); color: var(--acc); padding: 12px 24px; border-radius: 30px; font-weight: 900; font-size: 20px; margin-bottom: 10px; border: 1px solid var(--acc); box-shadow: 0 0 30px rgba(52,211,153,.4); animation: pulseEarn 1.5s infinite; }
+@keyframes pulseEarn { 0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(52,211,153,.3); } 50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(52,211,153,.6); } }
+.s3b h3 { font-size: 18px; font-weight: 800; }
+.s3b .sub { font-size: 11px; color: var(--sec); line-height: 1.4; }
+.acc-btn { background: var(--acc); box-shadow: 0 0 20px rgba(52,211,153,.4); width: 100%; margin-top: 14px; }
+
+/* ===== S4: Escrow / Payment ===== */
+.s4{align-items:center;justify-content:center;gap:12px;padding-top:40px!important}
+.s4 .lock-icon{width:60px;height:60px;border-radius:50%;background:rgba(251,191,36,.12);display:flex;align-items:center;justify-content:center;font-size:28px; box-shadow: 0 0 30px rgba(251,191,36,.2);}
+.s4 h3{font-size:16px;font-weight:800;text-align:center}
+.s4 .sub{font-size:11px;color:var(--sec);text-align:center;line-height:1.4}
+.upi-box{background:var(--surface);border-radius:12px;padding:14px;width:100%;border:1px solid var(--bor);text-align:center}
+.upi-box .ul{font-size:8px;font-weight:700;color:var(--mut);letter-spacing:1px;margin-bottom:4px}
+.upi-box .uv{font-size:16px;font-weight:800;color:var(--warn);letter-spacing:.5px}
+.utr-input{background:var(--card);border:1px solid var(--bor);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--txt);width:100%;text-align:center;letter-spacing:2px}
+.pay-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--acc);color:#fff;font-size:13px;font-weight:800;padding:14px;border-radius:12px;width:100%;box-shadow:0 0 16px rgba(52,211,153,.3)}
+.escrow-badge{font-size:9px;color:var(--acc);font-weight:700;letter-spacing:1px;display:flex;align-items:center;gap:4px}
+
+/* ===== S5: Chat ===== */
+.s5{padding-top:28px!important;gap:0}
+.msgs{flex:1;display:flex;flex-direction:column;gap:6px;padding:2px 0;overflow:hidden}
+.mr{display:flex;align-items:flex-end;gap:4px}
+.mr.me{flex-direction:row-reverse}
+.ma{width:22px;height:22px;border-radius:50%;background:var(--surface);font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--sec);flex-shrink:0}
+.mb{max-width:78%;padding:8px 12px;border-radius:14px;font-size:11px;line-height:1.3}
+.mb.them{background:var(--card);border:1px solid var(--bor);border-bottom-left-radius:3px}
+.mb.me{background:var(--pri);color:#fff;border-bottom-right-radius:3px}
+.mt{font-size:7px;color:var(--mut);margin-top:1px}
+.rcpt{background:var(--card);border-radius:14px;padding:12px;border:1px solid var(--bor);margin-top:6px}
+.rh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ri{width:28px;height:28px;border-radius:50%;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center;font-size:12px}
+.rt h4{font-size:12px;font-weight:700}.rt span{font-size:8px;color:var(--mut)}
+.rc{font-size:8px;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:.6px}
+.rc.pnd{background:rgba(251,191,36,.12);color:var(--warn)}
+.rc.lkd{background:rgba(52,211,153,.12);color:var(--acc)}
+.rd{height:1px;background:var(--bor);margin:6px 0}
+.rl{display:flex;justify-content:space-between;padding:3px 0;font-size:11px}
+.rl .k{color:var(--sec)}.rl .v{font-weight:700}
+.rl .v.gr{color:var(--acc);font-weight:800}
+
+/* ===== S6: Classroom ===== */
+.s6{align-items:center;justify-content:center;gap:10px;padding-top:40px!important}
+.vid-area{width:100%;aspect-ratio:16/10;background:var(--surface);border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden; box-shadow: 0 0 20px rgba(0,0,0,0.5);}
+.vid-area .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;height:100%;padding:6px}
+.vid-area .vp{background:var(--card);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:1px solid var(--bor); position: relative; overflow: hidden;}
+.vid-area .vp::after { content:''; position: absolute; inset:0; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6)); pointer-events: none;}
+.vid-area .vp .va{font-size:28px; z-index: 2;}
+.vid-area .vp span{font-size:9px;font-weight:600;color:#fff; z-index: 2;}
+.timer{font-size:26px;font-weight:900;color:var(--acc);font-variant-numeric:tabular-nums; text-shadow: 0 0 10px rgba(52,211,153,0.4);}
+.timer-label{font-size:10px;color:var(--sec);font-weight:600; text-transform: uppercase; letter-spacing: 1px;}
+.end-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--dng);color:#fff;font-size:13px;font-weight:800;padding:12px;border-radius:12px;width:100%;box-shadow:0 0 16px rgba(248,113,113,.3)}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#F87171;animation:ldot 1s ease-in-out infinite;margin-right:4px; box-shadow: 0 0 8px #F87171;}
+@keyframes ldot{0%,100%{opacity:1}50%{opacity:.3}}
+
+@media(max-width:400px){.phone{width:230px;height:480px;border-radius:26px}.cap h2{font-size:17px}.pbar{width:230px}.pulse-bg{display:none;}}
+</style>
+</head>
+<body>
+<div class="ambient"><div class="orb o1"></div><div class="orb o2"></div></div>
+<div class="particles" id="pts"></div>
+
+<div class="wrap">
+  <div class="pulse-bg"></div>
+  <div class="pulse-bg d2"></div>
+  
+  <div class="floater f1">💸</div>
+  <div class="floater f2">🎓</div>
+  <div class="floater f3">✨</div>
+  <div class="floater f4">💰</div>
+  <div class="floater f5">🚀</div>
+
+  <div class="cap"><h2 id="ct"></h2><p id="cd"></p></div>
+
+  <div class="phone" id="phone">
+    <div class="phone-shine"></div>
+    
+    <!-- Callouts -->
+    <div class="callout pri" id="c1" style="top:20px;left:50%;transform:translateX(-50%)">One-Tap Google Sign In</div>
+    <div class="callout acc" id="c2" style="bottom:70px;right:10px">Post or Accept Bounties</div>
+    <div class="callout pri" id="c3" style="top:45%;left:50%;transform:translateX(-50%)">Set Your Terms & Price</div>
+    <div class="callout acc" id="c3b" style="top:20%;left:50%;transform:translateX(-50%)">Tutor View: Instant Match</div>
+    <div class="callout wrn" id="c4" style="top:25%;left:50%;transform:translateX(-50%)">🔒 Secure Escrow Payment</div>
+    <div class="callout acc" id="c5" style="top:55%;left:50%;transform:translateX(-50%)">Accept & Lock Session</div>
+    <div class="callout pri" id="c6" style="top:15%;left:50%;transform:translateX(-50%)"><span class="live-dot"></span>Live Video Class</div>
+    
+    <!-- Tap ring -->
+    <div class="ring" id="ring"></div>
+
+    <div class="sw">
+      <!-- S1: Login -->
+      <div class="sc s1" id="sc0">
+        <img src="logo.svg" alt="Studylancer Logo" width="80" height="80" style="border-radius: 50%; box-shadow: 0 0 30px rgba(168,85,247,.5); animation: logoPulse 2s infinite;" />
+        <h3>Studylancer</h3>
+        <div class="sub">Peer-to-peer learning marketplace.<br>Teach anyone. Learn anything.</div>
+        <div class="gbtn"><span class="g">G</span> Sign in with Google</div>
+      </div>
+      <!-- S2: Marketplace -->
+      <div class="sc s2" id="sc1">
+        <div class="hd"><h3>Marketplace</h3><span class="live">✦ Live</span></div>
+        <div class="bc"><div class="bc-t"><div class="bc-a">R</div><div class="bc-tp">Need help with Python OOP</div><div class="bc-pr">₹300</div></div><div class="bc-pl"><span class="bc-pi">⏱ 60m</span><span class="bc-pi">🌐 EN</span></div></div>
+        <div class="bc"><div class="bc-t"><div class="bc-a">P</div><div class="bc-tp">Organic Chemistry Mechanisms</div><div class="bc-pr">₹450</div></div><div class="bc-pl"><span class="bc-pi">⏱ 90m</span><span class="bc-pi">🌐 HI</span></div></div>
+        <div class="bc"><div class="bc-t"><div class="bc-a">A</div><div class="bc-tp">Linear Algebra Eigenvalues</div><div class="bc-pr">₹250</div></div><div class="bc-pl"><span class="bc-pi">⏱ 45m</span><span class="bc-pi">🌐 EN</span></div></div>
+        <div class="tbar"><div class="tb a"><span class="ti">📋</span>Market</div><div class="tb"><span class="ti">📥</span>Inbox</div><div class="tb"><span class="ti">👤</span>Profile</div></div>
+        <div class="fab">+</div>
+      </div>
+      <!-- S3: Create -->
+      <div class="sc s3" id="sc2">
+        <h3>Post a Study Request</h3>
+        <div class="sub">Describe what you need — a tutor will find you.</div>
+        <div class="fl">TOPIC</div>
+        <div class="fi glow" id="typing">Need help with calculus<span class="cur"></span></div>
+        <div class="fl">PRICE (₹)</div><div class="fi">350</div>
+        <div class="fl">EXPIRES IN</div>
+        <div class="er"><div class="ep">1 Day</div><div class="ep sel">3 Days</div><div class="ep">Max 7</div></div>
+        <div class="fl">DURATION</div><div class="fi">60 min</div>
+        <div class="pbtn">✈ Post Request</div>
+      </div>
+      <!-- S3b: Accept Request -->
+      <div class="sc s3b" id="sc3">
+        <div class="earn-badge">💰 EARN ₹350</div>
+        <h3>Calculus Help Needed</h3>
+        <div class="sub">Rahul is looking for a tutor right now.</div>
+        <div class="rcpt" style="margin-top:10px; width: 100%; text-align: left;">
+          <div class="rl"><span class="k">Topic</span><span class="v">Calculus Limits</span></div>
+          <div class="rl"><span class="k">Duration</span><span class="v">60 min</span></div>
+          <div class="rl"><span class="k">Language</span><span class="v">English</span></div>
+        </div>
+        <div class="pbtn acc-btn">✓ Accept & Start Earning</div>
+      </div>
+      <!-- S4: Escrow -->
+      <div class="sc s4" id="sc4">
+        <div class="lock-icon">🔒</div>
+        <h3>Secure Your Session</h3>
+        <div class="sub">Funds held in escrow until session ends.<br>100% safe for students & tutors.</div>
+        <div class="upi-box"><div class="ul">PAY VIA UPI</div><div class="uv">₹300</div></div>
+        <div class="utr-input">4123 4567 8901</div>
+        <div class="pay-btn">✓ Submit Payment Proof</div>
+        <div class="escrow-badge">🛡 Protected by Escrow</div>
+      </div>
+      <!-- S5: Chat -->
+      <div class="sc s5" id="sc5">
+        <div class="msgs">
+          <div class="mr"><div class="ma">R</div><div><div class="mb them">Hey! Need help with OOP</div><div class="mt">7:01</div></div></div>
+          <div class="mr me"><div class="ma">P</div><div><div class="mb me">I'll explain with examples 🔥</div><div class="mt" style="text-align:right">7:02</div></div></div>
+          <div class="rcpt">
+            <div class="rh"><div class="ri">📄</div><div class="rt" style="flex:1"><h4>Session Proposal</h4><span>REF #42</span></div><span class="rc lkd">LOCKED ✓</span></div>
+            <div class="rd"></div>
+            <div class="rl"><span class="k">Time</span><span class="v">7:00 PM</span></div>
+            <div class="rl"><span class="k">Duration</span><span class="v">60 min</span></div>
+            <div class="rl"><span class="k">Fee</span><span class="v gr">₹300</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- S6: Classroom -->
+      <div class="sc s6" id="sc6">
+        <div style="font-size:10px;font-weight:700;color:var(--acc);letter-spacing:1px"><span class="live-dot"></span>CLASS IN PROGRESS</div>
+        <div class="vid-area"><div class="grid"><div class="vp"><div class="va">👨‍🎓</div><span>Rahul</span></div><div class="vp"><div class="va">👩‍🏫</div><span>Priya</span></div></div></div>
+        <div class="timer" id="tmr">42:17</div>
+        <div class="timer-label">Session Duration</div>
+        <div class="end-btn">⏹ End Class & Release</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pbar" id="pb"></div>
+</div>
+
+<script>
+const SLIDES=[
+  {t:'One-Tap Sign In',d:'Get started in seconds',dur:1800,callout:'c1',zoom:false},
+  {t:'Browse Bounties',d:'Real student requests, live prices',dur:2000,callout:'c2',zoom:false},
+  {t:'Post Your Request',d:'Describe topic, set price & duration',dur:2000,callout:'c3',zoom:true},
+  {t:'Accept & Earn',d:'Tutors can accept requests and earn money',dur:2200,callout:'c3b',zoom:true},
+  {t:'Escrow Protection',d:'Funds locked until session completes',dur:2200,callout:'c4',zoom:true},
+  {t:'Lock & Confirm',d:'Both sides agree before class starts',dur:1800,callout:'c5',zoom:false},
+  {t:'Live Classroom',d:'Attend class directly in the app',dur:2200,callout:'c6',zoom:true},
+];
+let cur=0,tmr=null;
+const phone=document.getElementById('phone'),ct=document.getElementById('ct'),cd=document.getElementById('cd'),pb=document.getElementById('pb'),ring=document.getElementById('ring');
+const scs=[...document.querySelectorAll('.sc')];
+
+// Build progress
+SLIDES.forEach((_,i)=>{const d=document.createElement('div');d.className='pd';d.innerHTML='<div class="f"></div>';pb.appendChild(d)});
+const dots=[...pb.querySelectorAll('.pd')];
+
+// Particles
+const pc=document.getElementById('pts');
+for(let i=0;i<25;i++){const p=document.createElement('div');p.className='p';p.style.left=Math.random()*100+'%';p.style.top=(50+Math.random()*50)+'%';p.style.animationDelay=Math.random()*3+'s';p.style.background=Math.random()>.5?'var(--pri)':'var(--acc)';pc.appendChild(p)}
+
+// Timer tick
+let timerVal=42*60+17;
+function tickTimer(){const m=Math.floor(timerVal/60),s=timerVal%60;document.getElementById('tmr').textContent=`${m}:${s.toString().padStart(2,'0')}`;timerVal++;if(timerVal>99*60)timerVal=0}
+
+// Tap ring effect
+function tapAt(x,y){ring.style.left=(x-25)+'px';ring.style.top=(y-25)+'px';ring.className='ring';void ring.offsetHeight;ring.className='ring go'}
+
+function go(idx){
+  clearTimeout(tmr);
+  const s=SLIDES[idx];cur=idx;
+  // Screens
+  scs.forEach(sc=>sc.classList.remove('on'));
+  if(scs[idx]) scs[idx].classList.add('on');
+  // Caption
+  ct.textContent=s.t;cd.textContent=s.d;
+  // Zoom
+  phone.classList.toggle('zoom',!!s.zoom);
+  // Callouts: hide all, show current
+  document.querySelectorAll('.callout').forEach(c=>c.classList.remove('on'));
+  setTimeout(()=>{const co=document.getElementById(s.callout);if(co)co.classList.add('on')},400);
+  // Tap ring mid-screen
+  setTimeout(()=>tapAt(135+Math.random()*40-20,280+Math.random()*40-20),600);
+  // Progress
+  dots.forEach((d,i)=>{d.classList.remove('done');const f=d.querySelector('.f');f.style.animation='none';f.style.width=i<idx?'100%':'0'});
+  dots.forEach((d,i)=>{if(i<idx)d.classList.add('done')});
+  requestAnimationFrame(()=>{const f=dots[idx].querySelector('.f');f.style.animation='none';void f.offsetHeight;f.style.animation=`prog ${s.dur}ms linear forwards`});
+  // Timer tick for classroom (slide 6)
+  if(idx===6){const iv=setInterval(tickTimer,1000);setTimeout(()=>clearInterval(iv),s.dur)}
+  // Auto-advance
+  tmr=setTimeout(()=>go((cur+1)%SLIDES.length),s.dur);
+}
+
+// Add prog keyframes
+const ss=document.createElement('style');ss.textContent='@keyframes prog{from{width:0}to{width:100%}}';document.head.appendChild(ss);
+
+go(0);
+</script>
+</body>
+</html>
