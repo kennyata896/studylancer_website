@@ -516,7 +516,7 @@ export default function Home() {
             </div>
 
             {/* Right Col: Interactive Demo iframe & Ads */}
-            <FadeIn delay={0.4} className="relative flex items-center justify-center min-h-[500px] sm:min-h-[700px] w-full max-w-[600px] mx-auto lg:mr-0 z-0 mt-8 lg:mt-0">
+            <FadeIn delay={0.4} className="relative flex items-center justify-center min-h-[550px] sm:min-h-[700px] w-full max-w-[600px] mx-auto lg:mr-0 z-0 mt-8 lg:mt-0">
               <div className="absolute inset-0 flex items-center justify-center">
                 <iframe 
                   src="/demo.html" 
@@ -527,10 +527,10 @@ export default function Home() {
               </div>
               
               {/* Transaction Popups (Ads-like elements) */}
-              <TransactionPopup text="Rahul earned ₹350" delay={2} position="top-[15%] left-[0%] sm:left-[5%]" />
-              <TransactionPopup text="Session Locked 🔒" delay={5} position="bottom-[25%] right-[-5%] sm:right-[5%]" />
-              <TransactionPopup text="New Bounty: OOP" delay={8} position="top-[40%] right-[0%] sm:right-[5%]" />
-              <TransactionPopup text="Payment Released 💸" delay={11} position="bottom-[10%] left-[5%] sm:left-[10%]" />
+              <TransactionPopup text="Rahul earned ₹350" delay={2} position="top-[12%] left-2 sm:left-[5%]" />
+              <TransactionPopup text="Session Locked 🔒" delay={5} position="bottom-[20%] right-2 sm:right-[5%]" />
+              <TransactionPopup text="New Bounty: OOP" delay={8} position="top-[38%] right-2 sm:right-[5%]" />
+              <TransactionPopup text="Payment Released 💸" delay={11} position="bottom-[5%] left-2 sm:left-[10%]" />
             </FadeIn>
             
           </div>

@@ -219,7 +219,18 @@ body{font-family:'Inter',sans-serif;background:transparent;min-height:100vh;disp
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#F87171;animation:ldot 1s ease-in-out infinite;margin-right:4px; box-shadow: 0 0 8px #F87171;}
 @keyframes ldot{0%,100%{opacity:1}50%{opacity:.3}}
 
-@media(max-width:400px){.phone{width:230px;height:480px;border-radius:26px}.cap h2{font-size:17px}.pbar{width:230px}.pulse-bg{display:none;}}
+@media(max-width:600px){
+  .phone{width:240px;height:500px;border-radius:26px;box-shadow:0 0 20px rgba(168,85,247,.2),0 10px 20px rgba(0,0,0,.6)}
+  .phone.zoom{transform:scale(1.05)!important}
+  .cap h2{font-size:18px}
+  .pbar{width:240px}
+  .pulse-bg, .orb, .floater, .particles{display:none!important}
+  .wrap{animation:none!important; transform:scale(0.85); margin-top:-20px}
+}
+@media(max-height:650px) and (min-width:601px){
+  .wrap{transform:scale(0.85)}
+  .phone.zoom{transform:scale(1.1)!important}
+}
 </style>
 </head>
 <body>
