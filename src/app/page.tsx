@@ -6,7 +6,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 /* ── Constants ─────────────────────────────────────────────── */
-const PLAY_STORE_URL = "https://play.google.com/store";
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.kennyata.Studylancer";
 
 /* ── Animation helpers ─────────────────────────────────────── */
 function FadeIn({
