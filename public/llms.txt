@@ -1,0 +1,9 @@
+# Studylancer
+
+Studylancer is an escrow-protected peer-to-peer learning marketplace where students can post bounties to learn topics or accept requests to teach and earn money.
+
+## Key Features
+- **Set Your Own Budget**: Decide what a topic is worth to you.
+- **Escrow Transaction Security**: Automated escrow system ensures zero risk.
+- **Transparent Profiles**: Verified student profiles and ratings.
+- **Total Scheduling Control**: Flexible dates and times.

@@ -506,7 +506,7 @@ export default function Home() {
               {/* Subheadline */}
               <FadeIn delay={0.2}>
                 <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed mb-10">
-                  Join a community where every student is a potential tutor. Post bounties for what you want to learn, or accept requests to teach and earn money securely.
+                  Join a community where every student is a potential tutor. Post <a href="#showcase" className="text-teal hover:underline transition-colors">bounties</a> for what you want to learn, or accept requests to teach and earn money securely through our <a href="#escrow" className="text-teal hover:underline transition-colors">escrow system</a>.
                 </p>
               </FadeIn>
 
@@ -591,7 +591,7 @@ export default function Home() {
               </h2>
               <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
                 A peer-to-peer marketplace built by students, for students.
-                Browse, connect, and learn — all from your phone.
+                Browse, connect, and <a href="#use-cases" className="text-teal hover:underline transition-colors">learn</a> — all from your phone.
               </p>
             </div>
           </FadeIn>
@@ -644,7 +644,7 @@ export default function Home() {
               </h2>
               <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
                 Our 3-step escrow security loop ensures zero risk. Funds are
-                locked until you confirm success.
+                locked until you confirm success. Read our <a href="#faq" className="text-teal hover:underline transition-colors">FAQ</a> for details.
               </p>
             </div>
           </FadeIn>
@@ -722,7 +722,7 @@ export default function Home() {
                 <br className="hidden sm:block" /> by Students.
               </h2>
               <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-                Real voices from early adopters who are already learning smarter.
+                Real voices from early adopters who are already <a href="#features" className="text-teal hover:underline transition-colors">learning smarter</a>.
               </p>
             </div>
           </FadeIn>
@@ -819,7 +819,7 @@ export default function Home() {
           <div className="flex flex-col gap-4">
             <FAQItem question="How does the escrow payment system work?" answer="Total financial security is our priority. When you post a learning request, your payment is securely locked in our digital escrow vault. The tutor does not receive the funds until the video session is successfully completed and you confirm you received the help you needed. Your money is perfectly safe from start to finish." delay={0.1} />
             <FAQItem question="How do I get paid as a tutor?" answer="Once a learning session is concluded and the student confirms its success, the funds are instantly released from the escrow hold directly into your account balance. No chasing down payments—just teach and get paid securely." delay={0.2} />
-            <FAQItem question="Can I talk to a tutor before committing to a session?" answer="Absolutely. We provide a built-in messaging system so you can communicate directly with interested tutors. You can verify their expertise, discuss your specific syllabus, and ensure they understand your exact requirements before you accept their offer and lock in the escrow." delay={0.3} />
+            <FAQItem question="Can I talk to a tutor before committing to a session?" answer="Absolutely. We provide a built-in messaging system so you can communicate directly with interested tutors. You can verify their expertise, discuss your specific syllabus. Ensure they understand your exact requirements before you accept their offer and lock in the escrow." delay={0.3} />
             <FAQItem question="How do the actual tutoring sessions take place?" answer="Everything is handled seamlessly within the platform. Once both parties agree to a time and price, a secure video lecture link is automatically generated and shared directly inside the app." delay={0.4} />
           </div>
         </div>
