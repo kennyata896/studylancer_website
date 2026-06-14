@@ -391,6 +391,41 @@ function ParallaxOrbs() {
   );
 }
 
+/* ── Content Components ────────────────────────────────────── */
+function FeatureCard({ title, description, delay }: { title: string; description: string; delay: number }) {
+  return (
+    <FadeIn delay={delay}>
+      <div className="glass-card rounded-2xl p-6 sm:p-8 h-full border border-teal/10 hover:border-teal/30 transition-colors">
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-3">{title}</h3>
+        <p className="text-slate-400 text-sm sm:text-base leading-relaxed">{description}</p>
+      </div>
+    </FadeIn>
+  );
+}
+
+function UseCaseCard({ title, description, delay }: { title: string; description: string; delay: number }) {
+  return (
+    <FadeIn delay={delay}>
+      <div className="flex flex-col h-full bg-slate-900/50 rounded-2xl p-6 sm:p-8 border border-white/5 hover:border-teal/20 transition-colors">
+        <div className="w-12 h-12 rounded-xl bg-teal/10 flex items-center justify-center text-xl mb-6">💡</div>
+        <h3 className="text-lg sm:text-xl font-bold text-white mb-3">{title}</h3>
+        <p className="text-slate-400 text-sm sm:text-base leading-relaxed">{description}</p>
+      </div>
+    </FadeIn>
+  );
+}
+
+function FAQItem({ question, answer, delay }: { question: string; answer: string; delay: number }) {
+  return (
+    <FadeIn delay={delay}>
+      <div className="glass-card rounded-2xl p-6 sm:p-8 mb-4 border border-teal/10 text-left hover:border-teal/30 transition-colors">
+        <h3 className="text-lg font-bold text-white mb-3">{question}</h3>
+        <p className="text-slate-400 text-sm sm:text-base leading-relaxed">{answer}</p>
+      </div>
+    </FadeIn>
+  );
+}
+
 /* ══════════════════════════════════════════════════════════════
    PAGE
    ══════════════════════════════════════════════════════════════ */
@@ -712,6 +747,80 @@ export default function Home() {
               detail="4th Year, Mechanical"
               delay={0.3}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          CORE PLATFORM FEATURES
+          ═══════════════════════════════════════════════════ */}
+      <section id="features" className="relative py-20 sm:py-28 lg:py-32 bg-slate-950/50">
+        <div className="section-divider" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
+          <FadeIn>
+            <div className="text-center mb-14 sm:mb-20">
+              <span className="text-teal text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 block">
+                Core Platform Features
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                Everything You Need to Succeed
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <FeatureCard title="Set Your Own Budget" description="Education shouldn't have a fixed price tag. You decide exactly what a topic is worth to you. Input your specific budget when posting a request, and let qualified tutors accept the bounty on your terms." delay={0.1} />
+            <FeatureCard title="Ironclad Transaction Security" description="Never worry about being scammed or dealing with awkward money transfers. Our automated escrow system guarantees that students only pay for successful sessions, and tutors are guaranteed their earnings for their time." delay={0.2} />
+            <FeatureCard title="Transparent Tutor Profiles" description="Know exactly who you are learning from. Before accepting any request, review the tutor’s verified profile to check their average ratings, past classes taught, and areas of expertise to ensure they are the perfect fit for your needs." delay={0.3} />
+            <FeatureCard title="Total Scheduling Control" description="No rigid timetables. You specify the exact date, preferred time range (e.g., 'Evening, 7-9 PM'), and session duration. You get to learn entirely on your own schedule." delay={0.4} />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          DETAILED USE CASES
+          ═══════════════════════════════════════════════════ */}
+      <section id="use-cases" className="relative py-20 sm:py-28 lg:py-32">
+        <div className="section-divider" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative">
+          <FadeIn>
+            <div className="text-center mb-14 sm:mb-20">
+              <span className="text-teal text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 block">
+                Detailed Use Cases
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                How Students Use Studylancer
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <UseCaseCard title="Stress-Free Exam Preparation" description="Don't waste hours trying to decipher complex textbooks alone. When midterms or finals approach, post a bounty for the exact chapters you are struggling with. Connect instantly with top-performing seniors who can break down complex topics into digestible, exam-focused explanations to ease your workload." delay={0.1} />
+            <UseCaseCard title="Last-Minute Assignment Rescue" description="Stuck on a persistent code bug or a complex theory the night before a deadline? Don't panic. Use the marketplace to find an expert who understands the specific topic. They will guide you through the roadblock, ensuring you actually understand the core concepts so you can complete your assignment with confidence." delay={0.2} />
+            <UseCaseCard title="Upskill with Advanced Tech Frameworks" description="Go beyond the standard college curriculum. Want to learn modern web development, AI model deployment, or advanced system architecture? Connect with skilled peers or industry professionals who can screen-share and walk you through advanced, real-world tech stacks that actually land you internships." delay={0.3} />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════
+          FREQUENTLY ASKED QUESTIONS
+          ═══════════════════════════════════════════════════ */}
+      <section id="faq" className="relative py-20 sm:py-28 lg:py-32 bg-slate-950/50">
+        <div className="section-divider" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative">
+          <FadeIn>
+            <div className="text-center mb-14 sm:mb-20">
+              <span className="text-teal text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 block">
+                FAQ
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                Frequently Asked Questions
+              </h2>
+            </div>
+          </FadeIn>
+          <div className="flex flex-col gap-4">
+            <FAQItem question="How does the escrow payment system work?" answer="Total financial security is our priority. When you post a learning request, your payment is securely locked in our digital escrow vault. The tutor does not receive the funds until the video session is successfully completed and you confirm you received the help you needed. Your money is perfectly safe from start to finish." delay={0.1} />
+            <FAQItem question="How do I get paid as a tutor?" answer="Once a learning session is concluded and the student confirms its success, the funds are instantly released from the escrow hold directly into your account balance. No chasing down payments—just teach and get paid securely." delay={0.2} />
+            <FAQItem question="Can I talk to a tutor before committing to a session?" answer="Absolutely. We provide a built-in messaging system so you can communicate directly with interested tutors. You can verify their expertise, discuss your specific syllabus, and ensure they understand your exact requirements before you accept their offer and lock in the escrow." delay={0.3} />
+            <FAQItem question="How do the actual tutoring sessions take place?" answer="Everything is handled seamlessly within the platform. Once both parties agree to a time and price, a secure video lecture link is automatically generated and shared directly inside the app." delay={0.4} />
           </div>
         </div>
       </section>
