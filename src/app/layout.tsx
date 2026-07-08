@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "Studylancer",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Studylancer Open Graph Image",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Studylancer — Learn on Your Terms. Pay What It's Worth.",
     description:
       "Post a learning bounty, connect with a peer tutor, and keep your money safe in escrow until the session is done.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
 };
 
